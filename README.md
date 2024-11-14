@@ -1,0 +1,1 @@
+Esse projeto foi criado com a intenção de desenvolver minhas habilidades em Java, o projeto está sendo feito seguindo as formações e cursos de Java da Alura
