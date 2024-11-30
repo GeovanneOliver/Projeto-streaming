@@ -1,5 +1,8 @@
 package br.com.screenmatch.modelos;
 
+import br.com.screenmatch.excecao.ErroDeConversaoAnoException;
+import com.google.gson.annotations.SerializedName;
+
 public class Titulo implements Comparable<Titulo> {
     private String nome;
     private int anoDeLancamento;
@@ -11,6 +14,15 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(String nome, int anoDeLancamento) {
         this.nome = nome;
         this.anoDeLancamento = anoDeLancamento;
+    }
+
+    public Titulo(TituloOmdb meuTituloOmdb) {
+        this.nome = meuTituloOmdb.Title();
+        if(meuTituloOmdb.Year().length() > 4){
+            throw new ErroDeConversaoAnoException("Ano do filme possui mais de 4 caracteres");
+        }
+        this.anoDeLancamento = Integer.valueOf(meuTituloOmdb.Year());
+        this.duracaoEmMinutos = Integer.valueOf(meuTituloOmdb.Runtime().substring(0,2));
     }
 
     public String getNome() {
@@ -66,5 +78,12 @@ public class Titulo implements Comparable<Titulo> {
     @Override
     public int compareTo(Titulo outroTitulo) {
         return this.getNome().compareTo(outroTitulo.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return "(Nome: " + nome +
+                ", Ano de lançamento: " + anoDeLancamento + ", "+
+                "Duração: "+ duracaoEmMinutos+")";
     }
 }
